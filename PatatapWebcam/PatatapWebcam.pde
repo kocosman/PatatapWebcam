@@ -3,10 +3,8 @@ import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import processing.video.*;
-import gab.opencv.*;
 
 Robot robot;
-
 
 
 int camWidth = 320;
