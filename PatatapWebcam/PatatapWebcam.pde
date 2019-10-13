@@ -7,6 +7,7 @@ import processing.video.*;
 Robot robot;
 
 
+
 int camWidth = 320;
 int camHeight = 240;
 int numPixels;
@@ -48,13 +49,13 @@ int keys[] = {
   KeyEvent.VK_Z
 };
 
-boolean robotEnable = false;
+boolean robotEnable = !false;
 
 ArrayList<Rectangle> rects;
 
 
 void setup() {
-  size(320, 240);
+  size(640, 240);
   background(50);
   rects = new ArrayList<Rectangle>();
 
@@ -109,7 +110,8 @@ void draw() {
       // Add these differences to the running tally
       movementSum += diffR + diffG + diffB;
       // Render the difference image to the screen
-      diffFrame.pixels[i] = color(diffR*15, diffG*15, diffB*15);
+      float diffGain = 5;
+      diffFrame.pixels[i] = color(diffR*diffGain, diffG*diffGain, diffB*diffGain);
 
       previousFrame[i] = currColor;
     }
@@ -121,15 +123,18 @@ void draw() {
     }
   }
 
+  image(diffFrame, 320, 0);
+
 
   for (int i = 0; i < rects.size(); i++) {
     Rectangle rectTemp = rects.get(i);
+    float fillGain = 3;
     color fillColor = extractColorFromImage(diffFrame.get((int)rectTemp.x, (int)rectTemp.y, (int)rectTemp.w, (int)rectTemp.h));
 
     int currR = (fillColor >> 16) & 0xFF; // Like red(), but faster
     int currG = (fillColor >> 8) & 0xFF;
     int currB = fillColor & 0xFF;
-    int c = currR+currG+currB;
+    float c = (currR+currG+currB)*fillGain;
     boolean pressKey = false;
     if (c < 240) {
       rectTemp.fillColor = 0;
@@ -140,7 +145,7 @@ void draw() {
       rectTemp.fillColor = 255;
     }
 
-    if (pressKey) {
+    if (pressKey && robotEnable) {
       robot.delay(25);
       robot.keyPress(keys[i]);
       robot.keyRelease(keys[i]);
