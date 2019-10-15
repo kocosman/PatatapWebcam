@@ -4,5 +4,6 @@ I love Patatap (https://www.patatap.com). I thought it would be fun to play with
 
 Written in Processing 3.3.6 ((https://processing.org/)), tested in Windows and Chrome.
 
+Check it out: https://vimeo.com/366130382
 
 Also try opening a text editor while the program is running.
